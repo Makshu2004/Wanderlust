@@ -16,7 +16,7 @@ const ExpressError=require("./utils/ExpressError.js");
 const {listingSchema,reviewSchema}=require("./schema.js");
 const Review=require("./models/review.js");
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo') ;                  //.default;
 const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStategy=require("passport-local");
@@ -50,6 +50,19 @@ app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 
+
+// const store = new MongoStore({
+//   mongoUrl: dbURL,
+//   crypto: {
+//     secret:process.env.SECRET,
+//   },
+//   touchAfter: 24 * 3600,
+// });
+// store.on("error", (err) => {
+//   console.error("Session store error:", err);
+// });
+
+
 const sessionOptions=
     {
        // store:store,
@@ -66,16 +79,16 @@ const sessionOptions=
 
 
 
-// const store=MongoStore.create({
-//     mongoUrl:dbURL,
-//     crypto:{
-//     secret:"mysuperscretcode",
-//   },
-//   touchAfter:24*3600,
-// });
-// store.on("error",(err)=>{
-//     console.log("Error in mongo session store",err);
-// });
+const store=MongoStore.create({
+    mongoUrl:dbURL,
+    crypto:{
+    secret:"mysuperscretcode",
+  },
+  touchAfter:24*3600,
+});
+store.on("error",(err)=>{
+    console.log("Error in mongo session store",err);
+});
 
 
 
