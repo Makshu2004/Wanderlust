@@ -61,11 +61,21 @@ app.use(express.static(path.join(__dirname,"/public")));
 // store.on("error", (err) => {
 //   console.error("Session store error:", err);
 // });
+const store=MongoStore.create({
+    mongoUrl:dbURL,
+    crypto:{
+    secret:"mysuperscretcode",
+  },
+  touchAfter:24*3600,
+});
+store.on("error",(err)=>{
+    console.log("Error in mongo session store",err);
+});
 
 
 const sessionOptions=
     {
-       // store:store,
+       store:store,
         secret:process.env.SECRET,
         resave:false,
         saveUninitialized:true,
@@ -79,16 +89,6 @@ const sessionOptions=
 
 
 
-const store=MongoStore.create({
-    mongoUrl:dbURL,
-    crypto:{
-    secret:"mysuperscretcode",
-  },
-  touchAfter:24*3600,
-});
-store.on("error",(err)=>{
-    console.log("Error in mongo session store",err);
-});
 
 
 
