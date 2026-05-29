@@ -134,9 +134,12 @@ app.use("/listings",listingsRouter);
 // using this for listings Reviews
 app.use("/listings/:id/reviews/",reviewsRouter);
 
-app.use("/listings",userRouter);
+app.use("/",userRouter);
                                                                     
-   
+
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 
 //err function for all which i snot define
 app.use((req,res,next)=>{
