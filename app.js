@@ -134,7 +134,7 @@ app.use("/listings",listingsRouter);
 // using this for listings Reviews
 app.use("/listings/:id/reviews/",reviewsRouter);
 
-app.use("/",userRouter);
+app.use("/listings",userRouter);
                                                                     
    
 
